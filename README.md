@@ -32,7 +32,7 @@ const parents = new Map([
   [j, null]
 ]);
 
-const sorted = sort(parents);
+const sorted = sort(parents); // sorted = new Set([g, mt, j, p, pj, m]);
 ```
 
 ## How to use
@@ -42,6 +42,8 @@ This matrix should be expressed as a `Map` containing :
 
 - as a key: a node of your dependency graph.
 - as a value: a `Set` containing all node's parents. Can be null or empty though
+
+`topo-kahn` returns a `Set` containing ordered nodes
 
 ## FAQ
 
@@ -53,7 +55,7 @@ This matrix should be expressed as a `Map` containing :
 import sort from topo-kahn ;
 
 const sorted = sort(children, { type: 'children' });
-// eq to const sorted = sort(parents);
+// eq. to const sorted = sort(parents);
 ```
 
 ## Reverse a matrix
