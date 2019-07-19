@@ -1,5 +1,11 @@
 # topo-kahn
 
+[![Build Status](https://travis-ci.org/liitfr/topo-kahn.svg?branch=master)](https://travis-ci.org/liitfr/topo-kahn)
+[![Coverage Status](https://coveralls.io/repos/github/liitfr/topo-kahn/badge.svg?branch=master)](https://coveralls.io/github/liitfr/topo-kahn?branch=master)
+![npm bundle size](https://img.shields.io/bundlephobia/min/topo-kahn.svg)
+![NPM](https://img.shields.io/npm/l/topo-kahn.svg)
+![npm](https://img.shields.io/npm/v/topo-kahn.svg)
+
 Topological sort (Kahn algorithm) an oriented graph containing any kind of node, using ES6 Maps & Sets.
 
 ## Example

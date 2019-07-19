@@ -1,0 +1,10 @@
+.git/
+coverage/
+node_modules/
+src/
+tests/
+.editorconfig
+.gitignore
+.travis.yml
+jest.config.js
+tsconfig.json

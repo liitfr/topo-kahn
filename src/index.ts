@@ -6,15 +6,15 @@ import {
   filterAndGetKeys,
   isEmptyRow,
   reverseMatrix,
-  isEmptyMatrix
-} from "./utils";
+  isEmptyMatrix,
+} from './utils';
 
-import { Matrix, Row } from "./types";
+import { Matrix, Row } from './types';
 
 type Opt = {
-  type: "parents" | "children";
+  type: 'parents' | 'children';
 };
-const PARENTS = "parents";
+const PARENTS = 'parents';
 
 const kahn = (matrixRef: Matrix, { type }: Opt = { type: PARENTS }) => {
   let parents: Matrix;
@@ -34,19 +34,22 @@ const kahn = (matrixRef: Matrix, { type }: Opt = { type: PARENTS }) => {
   while (pile.length > 0) {
     const item = pile.shift();
     result.add(item);
-    children.get(item).forEach((child: Row) => {
-      parents.set(
-        child,
-        new Set([...parents.get(child)].filter(parent => parent !== item))
-      );
-      if (isEmptyRow(parents.get(child))) {
-        pile.push(child);
-      }
-    });
+    const itemChildren = children.get(item);
+    if (itemChildren) {
+      itemChildren.forEach((child: Row) => {
+        parents.set(
+          child,
+          new Set([...parents.get(child)].filter(parent => parent !== item)),
+        );
+        if (isEmptyRow(parents.get(child))) {
+          pile.push(child);
+        }
+      });
+    }
   }
 
   if (!isEmptyMatrix(parents)) {
-    throw new Error("Loop detected in graph !");
+    throw new Error('Loop detected in graph !');
   }
 
   return result;

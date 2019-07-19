@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "module": "commonjs",
-    "jsx": "preserve",
-    "esModuleInterop": true,
+    "lib": ["es2017", "es7", "es6", "dom"],
+    "strict": true,
+    "declaration": true,
+    "outDir": "dist",
     "sourceMap": true,
-    "allowJs": true,
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "target": "esnext",
-    "rootDir": "src",
-    "moduleResolution": "node"
-  }
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests"]
 }

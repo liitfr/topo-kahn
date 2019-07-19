@@ -1,6 +1,6 @@
-import { getIndex, filterEntries, reverseMatrix, getKeys } from "../utils";
+import { getIndex, filterEntries, reverseMatrix, getKeys } from '../src/utils';
 
-import { g, mt, p, j, pj, m, pandj, parents } from "./dataset";
+import { g, mt, p, j, pj, m, pandj, parents } from './dataset';
 
 const children = new Map([
   [g, new Set([p])],
@@ -8,23 +8,23 @@ const children = new Map([
   [p, new Set([pj, m])],
   [j, new Set([pj, m])],
   [pj, new Set()],
-  [m, new Set()]
+  [m, new Set()],
 ]);
 
-test("getIndex", () => {
+test('getIndex', () => {
   expect(getIndex(1)(pandj)).toEqual(j);
 });
 
-test("filterEntries", () => {
+test('filterEntries', () => {
   expect(filterEntries(parents, ([k, v]) => k === g)).toEqual(
-    new Map([[g, null]])
+    new Map([[g, null]]),
   );
 });
 
-test("getKeys", () => {
+test('getKeys', () => {
   expect(getKeys(parents)).toEqual([g, mt, p, j, pj, m]);
 });
 
-test("reverseMatrix", () => {
+test('reverseMatrix', () => {
   expect(reverseMatrix(parents)).toEqual(children);
 });
