@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/liitfr/topo-kahn.svg?branch=master)](https://travis-ci.org/liitfr/topo-kahn)
 [![Coverage Status](https://coveralls.io/repos/github/liitfr/topo-kahn/badge.svg?branch=master)](https://coveralls.io/github/liitfr/topo-kahn?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f4857de1aa3244f88cf135e4360e83d5)](https://www.codacy.com/app/liitfr/topo-kahn?utm_source=github.com&utm_medium=referral&utm_content=liitfr/topo-kahn&utm_campaign=Badge_Grade)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/topo-kahn.svg)
 ![NPM](https://img.shields.io/npm/l/topo-kahn.svg)
 ![npm](https://img.shields.io/npm/v/topo-kahn.svg)
