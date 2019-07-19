@@ -13,8 +13,10 @@
     "test": "jest",
     "test-ci": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
-  "author": "liitfr",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/liitfr/topo-kahn.git"
+  },
   "keywords": [
     "dependency-graph",
     "dependency-resolution",
@@ -23,6 +25,12 @@
     "kahns-alogrithm",
     "kahn"
   ],
+  "author": "liitfr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liitfr/topo-kahn/issues"
+  },
+  "homepage": "https://github.com/liitfr/topo-kahn#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "24.0.15",
