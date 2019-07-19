@@ -1,6 +1,6 @@
 {
   "name": "topo-kahn",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Topological sort (Kahn algorithm) an oriented graph containing any kind of node, using ES6 Maps & Sets.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
