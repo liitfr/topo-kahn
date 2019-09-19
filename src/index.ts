@@ -4,28 +4,51 @@
 
 import {
   filterAndGetKeys,
+  generateMatrix,
+  isEmptyMatrix,
   isEmptyRow,
   reverseMatrix,
-  isEmptyMatrix,
 } from './utils';
 
-import { Matrix, Row } from './types';
+import { Params, EnrichedParams, Matrix, Opt, Row } from './types';
 
-type Opt = {
-  type: 'parents' | 'children';
-};
 const PARENTS = 'parents';
 
-const kahn = (matrixRef: Matrix, { type }: Opt = { type: PARENTS }) => {
+const checkParams = (params: Params) => {
+  const { generator, receivedData } = params;
+
+  if (generator && !(receivedData instanceof Set)) {
+    throw new Error('You must pass a Set if you want to use generator !');
+  } else if (!generator && receivedData instanceof Set) {
+    throw new Error('You must pass a generator if you want to use a Set !');
+  }
+
+  return params;
+};
+
+const prepareData = (params: Params) => {
+  const { generator, receivedData, type } = params;
+
   let parents: Matrix;
   let children: Matrix;
+
+  const completeMatrix: Matrix = generator
+    ? generateMatrix(receivedData as Row, generator)
+    : (receivedData as Matrix);
+
   if (type === PARENTS) {
-    parents = new Map(matrixRef);
-    children = reverseMatrix(matrixRef);
+    parents = new Map(completeMatrix);
+    children = reverseMatrix(completeMatrix);
   } else {
-    children = new Map(matrixRef);
-    parents = reverseMatrix(matrixRef);
+    children = new Map(completeMatrix);
+    parents = reverseMatrix(completeMatrix);
   }
+
+  return Object.assign({}, params, { children, parents });
+};
+
+const calculate = (params: EnrichedParams) => {
+  const { children, parents } = params;
 
   const orphans = filterAndGetKeys(parents, ([key, line]) => isEmptyRow(line));
   const pile = orphans;
@@ -53,6 +76,14 @@ const kahn = (matrixRef: Matrix, { type }: Opt = { type: PARENTS }) => {
   }
 
   return result;
+};
+
+const kahn = (
+  receivedData: Matrix | Row,
+  { type, generator }: Opt = { type: PARENTS },
+) => {
+  const params = { generator, receivedData, type };
+  return calculate(prepareData(checkParams(params)));
 };
 
 export { reverseMatrix };

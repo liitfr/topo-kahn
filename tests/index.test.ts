@@ -1,4 +1,16 @@
-import { g, mt, j, p, pj, m, parents, numbers } from './dataset';
+import {
+  g,
+  mt,
+  j,
+  p,
+  pj,
+  m,
+  parents,
+  numbers,
+  familyMembers,
+  parentsGenerator,
+  childrenGenerator,
+} from './dataset';
 import kahn, { reverseMatrix } from '../src';
 
 const familyResult = new Set([g, mt, j, p, pj, m]);
@@ -30,4 +42,24 @@ mapWithLoop.set('5', new Set(['10']));
 
 test('kahn on loop', () => {
   expect(() => kahn(mapWithLoop)).toThrow();
+});
+
+test('kahn with generator', () => {
+  expect(kahn(familyMembers, { generator: parentsGenerator })).toEqual(
+    familyResult,
+  );
+});
+
+test('reversed with generator', () => {
+  expect(
+    kahn(familyMembers, { generator: childrenGenerator, type: 'children' }),
+  ).toEqual(familyResult);
+});
+
+test('cannot use kahn with a Set but without generator', () => {
+  expect(() => kahn(familyMembers)).toThrow();
+});
+
+test('cannot use kahn with a generator but without a Set', () => {
+  expect(() => kahn(parents, { generator: childrenGenerator })).toThrow();
 });

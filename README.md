@@ -9,10 +9,12 @@
 
 Topological sort (Kahn algorithm) an oriented graph containing any kind of node, using ES6 Maps & Sets.
 
-## Example
+## Examples
+
+let start with some family members :
 
 ```js
-import sort from topo-kahn ;
+import sort, { reverseMatrix } from topo-kahn ;
 
 const g = { name: "George" };
 const mt = { name: "Marie-Thérèse" };
@@ -20,8 +22,15 @@ const p = { name: "Patrice" };
 const j = { name: "Josette" };
 const pj = { name: "Pierre-Jean" };
 const m = { name: "Mathias" };
-
 const pandj = new Set([p, j]);
+
+...
+```
+
+### Static style, by passing a Map that represents dependency matrix
+
+```js
+...
 
 const parents = new Map([
   [m, pandj],
@@ -29,25 +38,57 @@ const parents = new Map([
   [pj, pandj],
   [mt, null],
   [p, new Set([g, mt])],
-  [j, null]
+  [j, null],
 ]);
 
 const sorted = sort(parents); // sorted = new Set([g, mt, j, p, pj, m]);
 ```
 
-## How to use
+### Functional style, by passing a Set that represents family members and a generator function
 
-`topo-kahn` expects as input a dependency matrix.
-This matrix should be expressed as a `Map` containing :
+```js
+...
 
-- as a key: a node of your dependency graph.
-- as a value: a `Set` containing all node's parents. Can be null or empty though
+const family = new Set([m, g, pj, mt, p, j]);
 
-`topo-kahn` returns a `Set` containing ordered nodes
+const getParents = member => {
+  switch (member) {
+    case m:
+      return pandj;
+    case g:
+      return null;
+    case pj:
+      return pandj;
+    case mt:
+      return null;
+    case p:
+      return new Set([g, mt]);
+    case j:
+    default:
+      return null;
+  }
+};
+
+const sorted = sort(family, { generator: getParents }); // same result !
+```
+
+### You can even pass a reversed matrix / generator and work the other way around !
+
+```js
+// reverseMatrix is a util function provided by this package
+const sorted = sort(reverseMatrix(parents), { type: 'children' }); // same result !
+
+// or
+
+const sorted = sort(family, { generator: getChildren, type: 'children' }); // same result !
+```
 
 ## FAQ
 
-- Why should I use it ? If you like this way to express a graph, and / or if you want to define any kind of node (objects, strings, numbers, ...), then you should give it a try
+- Why should I use it ?
+  - If you like this way to express a graph
+  - Or if you already have a function that defines dependencies between nodes
+  - If you want / need to define any kind of node (objects, strings, numbers, ...) by using ES6 Maps & Sets
 - What if there's a loop in my graph ? `topo-kahn` will throw an error
 - What if I have a matrix containing node's children, and not parents ? Just pass a `type` option set to `children`
 

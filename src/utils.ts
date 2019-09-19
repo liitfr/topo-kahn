@@ -1,4 +1,4 @@
-import { Matrix, MatrixItem, Row, RowItem } from './types';
+import { Filter, Generator, Matrix, MatrixItem, Row, Item } from './types';
 
 const tautology = () => true;
 
@@ -6,20 +6,18 @@ const identity = (obj: any) => obj;
 
 export const getIndex = (index: number) => (row: Row) => [...row][index];
 
-export const filterEntries = (
-  matrix: Matrix,
-  filter: (item: MatrixItem) => boolean = tautology,
-) => new Map([...matrix].filter(filter));
+export const filterEntries = (matrix: Matrix, filter: Filter = tautology) =>
+  new Map([...matrix].filter(filter));
 
 const filterAndMapEntries = (
   matrix: Matrix,
-  filter: (item: MatrixItem) => boolean = tautology,
+  filter: Filter = tautology,
   map = identity,
 ) => [...filterEntries(matrix, filter)].map(map);
 
 const filterAndGetIndexEntries = (index: number) => (
   matrix: Matrix,
-  filter: (item: MatrixItem) => boolean = tautology,
+  filter: Filter = tautology,
 ) => filterAndMapEntries(matrix, filter, getIndex(index));
 
 const filterAndGetValues = filterAndGetIndexEntries(1);
@@ -42,7 +40,7 @@ export const reverseMatrix = (matrix: Matrix) => {
     }
     const row = matrix.get(key);
     if (!isEmptyRow(row)) {
-      row!.forEach((item: RowItem) => {
+      row!.forEach((item: Item) => {
         if (!reverse.has(item)) {
           reverse.set(item, new Set([key]));
         } else {
@@ -53,6 +51,11 @@ export const reverseMatrix = (matrix: Matrix) => {
   });
   return reverse;
 };
+
+export const generateMatrix = (row: Row, generator: Generator) =>
+  new Map(
+    [...row.keys()].map<[Item, Row | null]>(key => [key, generator(key)]),
+  );
 
 export const isEmptyMatrix = (matrix: Matrix) =>
   filterEntries(matrix, ([key, value]) => isEmptyRow(value)).size ===
