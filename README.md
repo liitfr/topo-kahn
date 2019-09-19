@@ -11,7 +11,7 @@ Topological sort (Kahn algorithm) an oriented graph containing any kind of node,
 
 ## Examples
 
-let start with some family members :
+let's start with some family members :
 
 ```js
 import sort, { reverseMatrix } from topo-kahn ;
